@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8"/>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"  />
+	<title>log in</title>
+	<script>
+		window.onload = function(){
+			var btn1 = document.getElementsById('btn1');
+			var inputs = document.getElementsByTagName('input');
+
+			btn1.addEventListener('click', function(){
+				var xhr - new XMLHttpRequest();
+				xhr.open('POS!', '/login');
+				// create object with user date
+				var userData = {
+					username: inputs[0].value,
+					password: inputs[1].value
+				};
+				//set the content type
+				xhr.setRequestHeader('Content-Type','application/json');
+				//send data
+				xhr.send(JSON.stringify(userData));
+
+				xhr.onload =  function(){
+					alert(this.responseText);
+				};
+
+				xhr.onerror = function(){
+					alert('server error!');
+				}
+			});
+
+			var btn2 = document.getElementsById('btn2');
+
+			btn2.onclick = function(){
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/logout');
+				xhr.send();
+				xhr.onload = function(){
+					alert(this.responseText);
+				}
+			}
+
+
+			var btns = document.querySelector('.btns');
+
+			btns.onclick = function(e){
+				if (!e.target.dataset.page) return false;
+				var target = e.target.dataset.page;
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/'+target);
+				xhr.send();
+				xhr.onload = function(){
+					window.location.href='/'+target
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="pannel well" style="width: 350 px; padding: 25px;text-align: center">
+	<h2 style = "margin-bottom: 35px">log in</h2>
+		<form name="login">
+			<div class="form-group">
+				<label>Username</label><input class="form-control input-lg" type="text" id="login"/>
+			</div>
+			<div class="form-group">
+				<label>Password</label><input class="form-control input-lg" type="text" id="password"/>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
